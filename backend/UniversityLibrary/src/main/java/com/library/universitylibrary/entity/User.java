@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +19,9 @@ public class User {
     private String userId;
 
     @Column(nullable = false)
+    private String userPw;
+
+    @Column(nullable = false)
     private String userName;
 
     @Column(nullable = false)
@@ -27,9 +30,9 @@ public class User {
     @Column(nullable = false)
     private String userPhone;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'USER'")
     private String userRole;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVE'")
     private String userStatus;
 }

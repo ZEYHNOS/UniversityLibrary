@@ -1,10 +1,15 @@
 @import "tailwindcss";
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* 커스텀 스타일 */
+.logo-text {
+  color: #4FD1C5; /* teal-400 색상 */
 }
 
 .logo {
