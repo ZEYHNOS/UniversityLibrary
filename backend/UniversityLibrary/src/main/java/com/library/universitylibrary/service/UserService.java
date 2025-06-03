@@ -1,7 +1,7 @@
 package com.library.universitylibrary.service;
 
-import com.library.universitylibrary.dto.SigninRequestDto;
-import com.library.universitylibrary.dto.SignupRequestDto;
+import com.library.universitylibrary.dto.user.SigninRequestDto;
+import com.library.universitylibrary.dto.user.SignupRequestDto;
 import com.library.universitylibrary.entity.User;
 import com.library.universitylibrary.jwt.JwtUtil;
 import com.library.universitylibrary.repository.UserRepository;

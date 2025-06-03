@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
 import Button from '../components/Button';
+import { toast } from 'react-toastify';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -25,15 +26,16 @@ const MainPage = () => {
     setIsLoggedIn(false);
     setUserRole(null);
     setUserName('');
-    navigate('/');
+    toast.success('로그아웃 되었습니다.');
+    setTimeout(() => navigate('/'), 1000);
   };
 
   const renderButtons = () => {
     if (!isLoggedIn) {
       return (
         <>
-          <Button onClick={() => navigate('/signin')}>로그인 하기</Button>
-          <Button onClick={() => navigate('/signup')}>회원가입</Button>
+          <Button onClick={() => navigate('/signin')} className="w-full">로그인 하기</Button>
+          <Button onClick={() => navigate('/signup')} className="w-full">회원가입</Button>
         </>
       );
     }
@@ -41,19 +43,19 @@ const MainPage = () => {
     if (userRole?.toUpperCase() === 'ADMIN') {
       return (
         <>
-          <Button>대출 승인 및 반납</Button>
-          <Button>도서 등록 및 삭제</Button>
-          <Button>도서 상태 관리</Button>
-          <Button>사용자 정보 수정</Button>
+          <Button className="w-full">대출 승인 및 반납</Button>
+          <Button onClick={() => navigate('/admin/addbook')} className="w-full">새로운 도서 등록</Button>
+          <Button className="w-full">도서 상태 관리</Button>
+          <Button className="w-full">사용자 정보 수정</Button>
         </>
       );
     }
 
     return (
       <>
-        <Button>도서 검색하기</Button>
-        <Button>이용내역 조회</Button>
-        <Button>도서 위치찾기</Button>
+        <Button className="w-full">도서 검색하기</Button>
+        <Button className="w-full">이용내역 조회</Button>
+        <Button className="w-full">도서 위치찾기</Button>
       </>
     );
   };

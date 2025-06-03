@@ -1,4 +1,4 @@
-package com.library.universitylibrary.dto;
+package com.library.universitylibrary.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

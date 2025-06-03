@@ -1,7 +1,7 @@
 package com.library.universitylibrary.controller;
 
-import com.library.universitylibrary.dto.SigninRequestDto;
-import com.library.universitylibrary.dto.SignupRequestDto;
+import com.library.universitylibrary.dto.user.SigninRequestDto;
+import com.library.universitylibrary.dto.user.SignupRequestDto;
 import com.library.universitylibrary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -34,4 +34,7 @@ public class Book {
 
     @Column(nullable = false)
     private Integer bookPrice;
+
+    @Column(name = "book_image_url")
+    private String bookImageUrl;
 }

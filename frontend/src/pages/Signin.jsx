@@ -5,6 +5,7 @@ import api from '../api/axiosInstance';
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { toast } from 'react-toastify';
 
 const Signin = () => {
     const navigate = useNavigate();
@@ -44,13 +45,14 @@ const Signin = () => {
                 };
                 localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 
+                toast.success(`${userInfo.user_name}님 환영합니다!`);
                 // 메인 페이지로 이동
-                navigate('/');
+                setTimeout(() => navigate('/'), 1000);
             } else {
                 throw new Error('토큰이 없습니다.');
             }
         } catch (err) {
-            console.error('로그인 실패:', err);
+            toast.error('아이디 또는 비밀번호가 올바르지 않습니다.');
             setError('아이디 또는 비밀번호가 올바르지 않습니다.');
         }
     };
@@ -81,7 +83,7 @@ const Signin = () => {
                         required
                     />
                     <div className="pt-4">
-                        <Button>로그인</Button>
+                        <Button type="submit" className="w-full">로그인</Button>
                     </div>
                 </form>
             </div>

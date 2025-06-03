@@ -5,6 +5,7 @@ import Logo from '../components/Logo';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import Button from '../components/Button';
+import { toast } from 'react-toastify';
 
 // axios 기본 설정
 axios.defaults.withCredentials = true; // 쿠키 포함 설정
@@ -48,11 +49,10 @@ const Signup = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log('회원가입 성공:', response.data);
-            navigate('/');
+            toast.success('회원가입이 완료되었습니다.');
+            setTimeout(() => navigate('/'), 100);
         } catch (err) {
-            console.error('회원가입 실패:', err);
-            setError(err.response?.data?.message || '회원가입 중 오류가 발생했습니다.');
+            toast.error('회원가입 중 오류가 발생했습니다.');
         }
     };
 
@@ -102,7 +102,7 @@ const Signup = () => {
                         required
                     />
                     <div className="pt-4">
-                        <Button>회원가입 완료</Button>
+                        <Button type="submit" className="w-full">회원가입 완료</Button>
                     </div>
                 </form>
             </div>
