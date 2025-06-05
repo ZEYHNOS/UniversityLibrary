@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Logo from '../components/Logo';
-import Input from '../components/Input';
-import Select from '../components/Select';
-import Button from '../components/Button';
+import Logo from '../../components/Logo';
+import Input from '../../components/Input';
+import Select from '../../components/Select';
+import Button from '../../components/Button';
 import { toast } from 'react-toastify';
 
 // axios 기본 설정

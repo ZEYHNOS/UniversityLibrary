@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Logo from '../../components/Logo';
-import Button from '../../components/Button';
+import Logo from '../../../components/Logo';
+import Button from '../../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 

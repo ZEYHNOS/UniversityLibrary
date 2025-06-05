@@ -22,7 +22,7 @@ const MainPage = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('userInfo');
+    localStorage.removeItem('userInfo', 'token');
     setIsLoggedIn(false);
     setUserRole(null);
     setUserName('');
@@ -45,7 +45,7 @@ const MainPage = () => {
         <>
           <Button className="w-full">대출 승인 및 반납</Button>
           <Button onClick={() => navigate('/admin/addbook')} className="w-full">새로운 도서 등록</Button>
-          <Button className="w-full">도서 상태 관리</Button>
+          <Button onClick={() => navigate('/admin/booklist')} className="w-full">도서 상태 관리</Button>
           <Button className="w-full">사용자 정보 수정</Button>
         </>
       );

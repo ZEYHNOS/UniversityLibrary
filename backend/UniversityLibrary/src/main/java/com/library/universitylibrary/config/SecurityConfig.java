@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/user/signup", "/user/signin", "/h2-console/**", "/api/**").permitAll()
+                .requestMatchers("/user/signup", "/user/signin", "/h2-console/**", "/api/**", "/libraryimage/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // 인자 전달

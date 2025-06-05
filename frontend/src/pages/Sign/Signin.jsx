@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import api from '../api/axiosInstance';
-import Logo from '../components/Logo';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import api from '../../api/axiosInstance';
+import Logo from '../../components/Logo';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 import { toast } from 'react-toastify';
 
 const Signin = () => {
@@ -47,7 +47,7 @@ const Signin = () => {
                 
                 toast.success(`${userInfo.user_name}님 환영합니다!`);
                 // 메인 페이지로 이동
-                setTimeout(() => navigate('/'), 1000);
+                setTimeout(() => navigate('/'), 100);
             } else {
                 throw new Error('토큰이 없습니다.');
             }

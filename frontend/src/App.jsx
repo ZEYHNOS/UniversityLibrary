@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Toast from './components/Toast';
 
 import MainPage from './pages/MainPage';
-import Signup from './pages/Signup';
-import Signin from './pages/Signin';
-import AddCategory from './pages/Admin/AddCategory';
-import AddBook from './pages/Admin/AddBook';
+import Signup from './pages/Sign/Signup';
+import Signin from './pages/Sign/Signin';
+import AddCategory from './pages/Admin/add/AddCategory';
+import AddBook from './pages/Admin/add/AddBook';
+import Booklist from './pages/Admin/bookmanagement/booklist';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 
         <Route path="/admin/addcategory" element={<AddCategory />} />
         <Route path="/admin/addbook" element={<AddBook />} />
+        <Route path="/admin/booklist" element={<Booklist />} />
       </Routes>
     </Router>
   );
