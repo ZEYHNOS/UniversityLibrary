@@ -30,7 +30,7 @@ public class User {
     @Column(nullable = false)
     private String userPhone;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'USER'")
+    @Column(name = "user_role", columnDefinition = "VARCHAR(10) DEFAULT 'USER'")
     private String userRole;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVE'")

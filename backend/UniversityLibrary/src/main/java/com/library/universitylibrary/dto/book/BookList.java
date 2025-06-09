@@ -19,6 +19,8 @@ public class BookList {
     private Integer bookPrice;
     private String bookImageUrl;
     private String categoryName;
+    private String categoryLocation;
+    private String bookStatus;
 
     public BookList(Book book) {
         this.bookId = book.getBookId();
@@ -28,6 +30,8 @@ public class BookList {
         this.bookYear = book.getBookYear() != null ? book.getBookYear().toString() : null;
         this.bookPrice = book.getBookPrice();
         this.bookImageUrl = "http://localhost:2866" + book.getBookImageUrl();
-        this.categoryName = book.getCategory().getCategoryName(); // LAZY라도 여기서 접근하므로 초기화됨
+        this.categoryName = book.getCategory().getCategoryName();
+        this.categoryLocation = book.getCategory().getCategoryLocation();
+        this.bookStatus = book.getBookStatus();
     }
 }

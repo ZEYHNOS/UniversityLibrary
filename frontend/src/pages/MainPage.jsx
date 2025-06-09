@@ -43,7 +43,7 @@ const MainPage = () => {
     if (userRole?.toUpperCase() === 'ADMIN') {
       return (
         <>
-          <Button className="w-full">대출 승인 및 반납</Button>
+          <Button onClick={() => navigate('/admin/loan')} className="w-full">대출 승인 및 반납</Button>
           <Button onClick={() => navigate('/admin/addbook')} className="w-full">새로운 도서 등록</Button>
           <Button onClick={() => navigate('/admin/booklist')} className="w-full">도서 상태 관리</Button>
           <Button className="w-full">사용자 정보 수정</Button>
@@ -53,9 +53,9 @@ const MainPage = () => {
 
     return (
       <>
-        <Button className="w-full">도서 검색하기</Button>
+        <Button onClick={() => navigate('/searchbooklist')} className="w-full">도서 검색하기</Button>
+        <Button onClick={() => navigate('/searchlocation')} className="w-full">도서 위치찾기</Button>
         <Button className="w-full">이용내역 조회</Button>
-        <Button className="w-full">도서 위치찾기</Button>
       </>
     );
   };

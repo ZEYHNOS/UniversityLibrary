@@ -23,6 +23,7 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/book")
@@ -79,7 +80,8 @@ public class BookController {
         }
         return sb.toString();
     }
-
+    
+    // 도서 추가(관리자전용)
     @PostMapping("/add")
     public ResponseEntity<Book> addBook(@RequestBody BookRequest request) {
         Category category = categoryRepository.findById(request.getCategory_id())
@@ -95,16 +97,46 @@ public class BookController {
                         : null)
                 .bookPrice(request.getBook_price())
                 .bookImageUrl(request.getBook_img_url())
+                .bookStatus("Y")
                 .build();
 
         Book saved = bookRepository.save(book);
         return ResponseEntity.ok(saved);
     }
-
+    
+    // 도서 리스트(사용자, 관리자)
     @GetMapping("/list")
     public List<BookList> getAllBooks() {
         return bookService.getAllBooks().stream()
                 .map(BookList::new)
                 .toList();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BookList>> searchBooks(
+            @RequestParam("type") String type,
+            @RequestParam("keyword") String keyword
+    ) {
+        List<Book> books;
+
+        switch (type.toLowerCase()) {
+            case "title":
+                books = bookRepository.findByBookTitleContainingIgnoreCase(keyword);
+                break;
+            case "author":
+                books = bookRepository.findByBookAuthorContainingIgnoreCase(keyword);
+                break;
+            case "publisher":
+                books = bookRepository.findByBookPublisherContainingIgnoreCase(keyword);
+                break;
+            default:
+                return ResponseEntity.badRequest().build();
+        }
+
+        List<BookList> result = books.stream()
+                .map(BookList::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(result);
     }
 }

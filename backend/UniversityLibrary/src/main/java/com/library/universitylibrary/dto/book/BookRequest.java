@@ -14,4 +14,5 @@ public class BookRequest {
     private String book_year; // 문자열로 받아서 LocalDate로 파싱
     private Integer book_price;
     private String book_img_url;
+    private String bookStatus;
 }

@@ -15,7 +15,7 @@ const columns = [
     { id: 'bookStatus', label: '상태', align: 'center', sortable: false },
 ];
 
-const Booklist = () => {
+const SearchBookList = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -278,4 +278,4 @@ const Booklist = () => {
     );
 };
 
-export default Booklist;
+export default SearchBookList;

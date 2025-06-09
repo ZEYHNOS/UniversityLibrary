@@ -5,7 +5,7 @@ const Input = ({ label, type = 'text', value, onChange, required = false }) => {
         <div className="w-full">
             <label className="block text-gray-700 text-sm font-medium mb-2">
                 {label}
-                {required && <span className="text-red-500 ml-1">*</span>}
+                {label && required && <span className="text-red-500 ml-1">*</span>}
             </label>
             <input
                 type={type}
