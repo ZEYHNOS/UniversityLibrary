@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Container,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Typography,CircularProgress,Alert,TablePagination,Box,TextField,Select,MenuItem,FormControl,InputLabel,Grid,Stack,TableSortLabel} from '@mui/material';
 import axios from 'axios';
 import Logo from '../../../components/Logo';
+import BookModal from './BookModal';
 
 const columns = [
     { id: 'bookId', label: '일련번호', align: 'center', sortable: true },
@@ -25,23 +26,24 @@ const Booklist = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('bookId');
+    const [selectedBook, setSelectedBook] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    // fetchBooks를 useEffect 밖으로 분리
+    const fetchBooks = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get('http://localhost:2866/api/book/list');
+            setBooks(response.data || []);
+            setError(null);
+        } catch (error) {
+            setError('책 목록을 불러오는데 실패했습니다.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get('http://localhost:2866/api/book/list');
-                console.log('API 응답:', response.data);
-                setBooks(response.data || []);
-                setError(null);
-            } catch (error) {
-                console.error('책 목록을 불러오는데 실패했습니다:', error);
-                setError('책 목록을 불러오는데 실패했습니다.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchBooks();
     }, []);
 
@@ -124,7 +126,7 @@ const Booklist = () => {
     }
 
     return (
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth={false} sx={{ mt: 4, mb: 4, maxWidth: '1300px' }}>
             <Logo />
             <Grid container alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
                 <Grid item>
@@ -183,12 +185,13 @@ const Booklist = () => {
                 <Paper 
                     sx={{ 
                         width: '100%', 
+                        minWidth: 1300, 
                         overflow: 'hidden',
                         boxShadow: '0 4px 6px rgba(64, 160, 188, 0.1)'
                     }}
                 >
-                    <TableContainer sx={{ maxHeight: 600 }}>
-                        <Table stickyHeader>
+                    <TableContainer sx={{ maxHeight: 600, minWidth: 1300, overflowX: 'hidden' }}>
+                        <Table stickyHeader sx={{ minWidth: 1300 }}>
                             <TableHead>
                                 <TableRow>
                                     {columns.map((col) => (
@@ -222,8 +225,9 @@ const Booklist = () => {
                                             key={book.bookId}
                                             sx={{
                                                 '&:nth-of-type(odd)': { backgroundColor: 'rgba(64, 160, 188, 0.05)' },
-                                                '&:hover': { backgroundColor: 'rgba(64, 160, 188, 0.1)' }
+                                                '&:hover': { backgroundColor: 'rgba(64, 160, 188, 0.1)', cursor: 'pointer' }
                                             }}
+                                            onClick={() => { setSelectedBook(book); setModalOpen(true); }}
                                         >
                                             <TableCell align="center">{book.bookId}</TableCell>
                                             <TableCell align="center">
@@ -273,6 +277,22 @@ const Booklist = () => {
                         }}
                     />
                 </Paper>
+            )}
+            {selectedBook && (
+                <BookModal
+                    open={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    book={selectedBook}
+                    onUpdate={() => {
+                        fetchBooks();
+                        setModalOpen(false);
+                    }}
+                    onDelete={() => {
+                        fetchBooks();
+                        setModalOpen(false);
+                    }}
+                    onReload={fetchBooks}
+                />
             )}
         </Container>
     );

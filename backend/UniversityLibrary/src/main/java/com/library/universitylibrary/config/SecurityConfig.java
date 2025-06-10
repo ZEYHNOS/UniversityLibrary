@@ -4,6 +4,7 @@ import com.library.universitylibrary.jwt.JwtAuthenticationFilter;
 import com.library.universitylibrary.jwt.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -50,6 +51,7 @@ public class SecurityConfig {
                         "/v3/api-docs/**",
                         "/v3/api-docs.yaml"
                 ).permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/api/book/delete/**").permitAll() // ✅ 따로 분리!
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // 인자 전달

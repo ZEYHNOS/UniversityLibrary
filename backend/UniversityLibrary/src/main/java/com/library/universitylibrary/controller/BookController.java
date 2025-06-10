@@ -2,6 +2,7 @@ package com.library.universitylibrary.controller;
 
 import com.library.universitylibrary.dto.book.BookList;
 import com.library.universitylibrary.dto.book.BookRequest;
+import com.library.universitylibrary.dto.book.BookUpdateRequest;
 import com.library.universitylibrary.entity.Book;
 import com.library.universitylibrary.entity.Category;
 import com.library.universitylibrary.repository.BookRepository;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +21,6 @@ import java.nio.file.StandardCopyOption;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -81,7 +79,7 @@ public class BookController {
         return sb.toString();
     }
     
-    // 도서 추가(관리자전용)
+    // 도서 추가(관리자)
     @PostMapping("/add")
     public ResponseEntity<Book> addBook(@RequestBody BookRequest request) {
         Category category = categoryRepository.findById(request.getCategory_id())
@@ -103,7 +101,21 @@ public class BookController {
         Book saved = bookRepository.save(book);
         return ResponseEntity.ok(saved);
     }
-    
+
+    //도서 수정(관리자)
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateBook(@PathVariable Long id, @RequestBody BookUpdateRequest dto) {
+        bookService.updateBook(id, dto);
+        return ResponseEntity.ok("책 수정 완료");
+    }
+
+    // 도서 삭제(관리자)
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.ok("책이 성공적으로 삭제되었습니다. ID: " + id);
+    }
+
     // 도서 리스트(사용자, 관리자)
     @GetMapping("/list")
     public List<BookList> getAllBooks() {

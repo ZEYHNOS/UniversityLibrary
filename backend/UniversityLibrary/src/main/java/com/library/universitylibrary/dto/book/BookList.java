@@ -18,6 +18,7 @@ public class BookList {
     private String bookYear;
     private Integer bookPrice;
     private String bookImageUrl;
+    private String categoryId;
     private String categoryName;
     private String categoryLocation;
     private String bookStatus;
@@ -30,6 +31,7 @@ public class BookList {
         this.bookYear = book.getBookYear() != null ? book.getBookYear().toString() : null;
         this.bookPrice = book.getBookPrice();
         this.bookImageUrl = "http://localhost:2866" + book.getBookImageUrl();
+        this.categoryId = book.getCategory().getCategoryId();
         this.categoryName = book.getCategory().getCategoryName();
         this.categoryLocation = book.getCategory().getCategoryLocation();
         this.bookStatus = book.getBookStatus();

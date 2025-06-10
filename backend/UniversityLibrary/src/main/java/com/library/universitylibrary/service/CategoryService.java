@@ -25,6 +25,7 @@ public class CategoryService {
 
         return categoryRepository.save(category);
     }
+
     public List<CategoryList> getCategoryLists() {
         return categoryRepository.findAll()
                 .stream()

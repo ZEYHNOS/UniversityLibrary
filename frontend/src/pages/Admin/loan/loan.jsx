@@ -58,13 +58,13 @@ const LoanPage = () => {
         <Logo />
         <div className="flex gap-4 mt-8">
             <Button
-            className={mode === 'loan' ? 'bg-[#40A0BC] text-white' : ''}
+            className={`border-2 border-[#40A0BC] ${mode === 'loan' ? 'bg-[#40A0BC] text-white' : 'bg-white text-[#40A0BC]'}`}
             onClick={() => setMode('loan')}
             >
             대출
             </Button>
             <Button
-            className={mode === 'return' ? 'bg-[#40A0BC] text-white' : ''}
+            className={`border-2 border-[#40A0BC] ${mode === 'return' ? 'bg-[#40A0BC] text-white' : 'bg-white text-[#40A0BC]'}`}
             onClick={() => setMode('return')}
             >
             반납
