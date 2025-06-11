@@ -9,11 +9,11 @@ import SearchBookList from './pages/User/BookList/SearchBookList';
 import SearchLocation from './pages/User/Location/SearchLocation';
 import LoanList from './pages/User/LoanList/LoanList';
 
-import AddCategory from './pages/Admin/add/AddCategory';
-import AddBook from './pages/Admin/add/AddBook';
-import Booklist from './pages/Admin/bookmanagement/BookList';
-import Loan from './pages/Admin/loan/Loan';
-import Management from './pages/Admin/usermanagement/Management';
+import AddCategory from './pages/Admin/Add/AddCategory';
+import AddBook from './pages/Admin/Add/AddBook';
+import Booklist from './pages/Admin/BookManagement/BookList';
+import Loan from './pages/Admin/Loan/Loan';
+import Management from './pages/Admin/UserManagement/Management';
 
 function App() {
   return (
