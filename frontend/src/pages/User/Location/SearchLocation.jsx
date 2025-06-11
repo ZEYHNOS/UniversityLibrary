@@ -166,7 +166,7 @@ const SearchLocation = () => {
             <Modal open={!!selectedBook} onClose={() => setSelectedBook(null)}>
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', p: 4, borderRadius: 2, boxShadow: 24, minWidth: 400, maxWidth: 600 }}>
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        {selectedBook?.bookTitle} 의 위치는는
+                        {selectedBook?.bookTitle} 의 위치는
                     </Typography>
                     <Typography
                         sx={{

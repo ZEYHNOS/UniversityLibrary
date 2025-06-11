@@ -1,12 +1,19 @@
 package com.library.universitylibrary.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @Configuration
+@PropertySource("classpath:application.properties")
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${library.image.upload-dir}")
+    private String uploadDir;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -19,8 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 정적 리소스 매핑
         registry.addResourceHandler("/libraryimage/**")
-                .addResourceLocations("file:///E:/libraryimage/");
+                .addResourceLocations("file:///" + uploadDir);
     }
 }

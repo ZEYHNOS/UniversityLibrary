@@ -8,6 +8,7 @@ import com.library.universitylibrary.entity.Category;
 import com.library.universitylibrary.repository.BookRepository;
 import com.library.universitylibrary.repository.CategoryRepository;
 import com.library.universitylibrary.service.BookService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class BookController {
     private final BookRepository bookRepository;
     private final BookService bookService;
 
+    @Value("${library.image.upload-dir}")
+    private String uploadDir;
 
     public BookController(CategoryRepository categoryRepository, BookRepository bookRepository, BookService bookService) {
         this.categoryRepository = categoryRepository;
@@ -41,8 +44,6 @@ public class BookController {
     @PostMapping("/upload/images")
     public ResponseEntity<String> uploadBookImage(@RequestParam("image") MultipartFile imageFile) {
         try {
-            String uploadDir = "E:/libraryimage/";
-
             // 확장자 추출
             String originalName = imageFile.getOriginalFilename();
             String extension = "";
@@ -53,7 +54,6 @@ public class BookController {
 
             // 안전한 10글자 영문+숫자 랜덤 문자열 생성
             String fileName = generateRandomFileName(10) + extension;
-
             Path filePath = Paths.get(uploadDir + fileName);
 
             Files.createDirectories(filePath.getParent());
