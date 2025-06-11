@@ -1,5 +1,6 @@
 package com.library.universitylibrary.controller;
 
+import com.library.universitylibrary.dto.loan.LoanListResponseDto;
 import com.library.universitylibrary.dto.loan.LoanRequestDto;
 import com.library.universitylibrary.entity.Book;
 import com.library.universitylibrary.entity.Loan;
@@ -8,6 +9,7 @@ import com.library.universitylibrary.repository.BookRepository;
 import com.library.universitylibrary.repository.LoanRepository;
 import com.library.universitylibrary.repository.UserRepository;
 import com.library.universitylibrary.dto.loan.LoanInfoDto;
+import com.library.universitylibrary.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ public class LoanController {
     private final LoanRepository loanRepository;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final LoanService loanService;
 
     @PostMapping("/create")
     public ResponseEntity<String> createLoan(@RequestBody LoanRequestDto dto) {
@@ -101,4 +104,9 @@ public class LoanController {
         return ResponseEntity.ok("반납 완료");
     }
 
+    @GetMapping("/list/{userId}")
+    public ResponseEntity<List<LoanListResponseDto>> getLoanListByUser(@PathVariable String userId) {
+        List<LoanListResponseDto> loanList = loanService.getLoansByUserId(userId);
+        return ResponseEntity.ok(loanList);
+    }
 }

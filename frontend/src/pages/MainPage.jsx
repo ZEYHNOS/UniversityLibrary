@@ -35,7 +35,6 @@ const MainPage = () => {
       return (
         <>
           <Button onClick={() => navigate('/signin')} className="w-full">로그인 하기</Button>
-          <Button onClick={() => navigate('/signup')} className="w-full">회원가입</Button>
         </>
       );
     }
@@ -46,7 +45,7 @@ const MainPage = () => {
           <Button onClick={() => navigate('/admin/loan')} className="w-full">대출 승인 및 반납</Button>
           <Button onClick={() => navigate('/admin/addbook')} className="w-full">새로운 도서 등록</Button>
           <Button onClick={() => navigate('/admin/booklist')} className="w-full">도서 상태 관리</Button>
-          <Button className="w-full">사용자 정보 수정</Button>
+          <Button onClick={() => navigate('/admin/usermanagement')} className="w-full">사용자 정보 수정</Button>
         </>
       );
     }
@@ -55,7 +54,7 @@ const MainPage = () => {
       <>
         <Button onClick={() => navigate('/searchbooklist')} className="w-full">도서 검색하기</Button>
         <Button onClick={() => navigate('/searchlocation')} className="w-full">도서 위치찾기</Button>
-        <Button className="w-full">이용내역 조회</Button>
+        <Button onClick={() => navigate('/loanlist')} className="w-full">이용내역 조회</Button>
       </>
     );
   };

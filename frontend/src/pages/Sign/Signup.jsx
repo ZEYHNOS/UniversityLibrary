@@ -50,7 +50,7 @@ const Signup = () => {
                 }
             });
             toast.success('회원가입이 완료되었습니다.');
-            setTimeout(() => navigate('/'), 100);
+            setTimeout(() => navigate(-1), 100);
         } catch (err) {
             toast.error('회원가입 중 오류가 발생했습니다.');
         }
@@ -102,7 +102,7 @@ const Signup = () => {
                         required
                     />
                     <div className="pt-4">
-                        <Button type="submit" className="w-full">회원가입 완료</Button>
+                        <Button type="submit" className="w-full">회원 추가</Button>
                     </div>
                 </form>
             </div>

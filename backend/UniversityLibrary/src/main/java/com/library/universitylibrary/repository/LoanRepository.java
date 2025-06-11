@@ -9,4 +9,6 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     // user_id와 loan_return 조건으로 대출 조회
     List<Loan> findByUser_UserIdAndLoanReturn(String userId, String loanReturn);
+
+    List<Loan> findByUser_UserId(String userId);
 }
