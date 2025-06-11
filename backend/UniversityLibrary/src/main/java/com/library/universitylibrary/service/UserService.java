@@ -2,12 +2,16 @@ package com.library.universitylibrary.service;
 
 import com.library.universitylibrary.dto.user.SigninRequestDto;
 import com.library.universitylibrary.dto.user.SignupRequestDto;
+import com.library.universitylibrary.dto.user.UserListResponseDto;
 import com.library.universitylibrary.entity.User;
 import com.library.universitylibrary.jwt.JwtUtil;
 import com.library.universitylibrary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +55,20 @@ public class UserService {
                 user.getUserName(),
                 user.getUserRole()
         );
+    }
+    
+    // 회원 리스트
+    public List<UserListResponseDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                // 관리자계정은 제외하는 필터링
+                .filter(user -> !"ADMIN".equalsIgnoreCase(user.getUserRole()))
+                .map(user -> new UserListResponseDto(
+                        user.getUserId(),
+                        user.getUserName(),
+                        user.getUserDp(),
+                        user.getUserPhone(),
+                        user.getUserStatus()
+                ))
+                .collect(Collectors.toList());
     }
 }

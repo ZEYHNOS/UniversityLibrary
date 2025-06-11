@@ -14,6 +14,7 @@ import AddBook from './pages/Admin/Add/AddBook';
 import Booklist from './pages/Admin/BookManagement/BookList';
 import Loan from './pages/Admin/Loan/Loan';
 import Management from './pages/Admin/UserManagement/Management';
+import UserManagement from './pages/Admin/UserManagement/UserManagement';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/admin/loan" element={<Loan />} />
         <Route path="/admin/usermanagement" element={<Management />} />
         <Route path="/admin/usermanagement/signup" element={<Signup />} />
+        <Route path="/admin/usermanagement/userlist" element={<UserManagement />} />
       </Routes>
     </Router>
   );

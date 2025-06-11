@@ -35,6 +35,11 @@ public class LoanController {
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다"));
 
+        // 활성화 상태가 아니면 대출 불가능
+        if (!"ACTIVE".equalsIgnoreCase(user.getUserStatus())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("현재 대출이 불가능한 사용자입니다.");
+        }
+
         Book book = bookRepository.findById(dto.getBookId().longValue())
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 책입니다"));
 
@@ -42,6 +47,7 @@ public class LoanController {
         if ("N".equals(book.getBookStatus())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 대출 중인 책입니다.");
         }
+
 
         // 책 상태 변경
         book.setBookStatus("N");

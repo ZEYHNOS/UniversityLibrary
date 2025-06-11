@@ -41,7 +41,7 @@ const Signin = () => {
                 const userInfo = {
                     user_id: decodedToken.sub,
                     user_name: decodedToken.userName,
-                    user_role: decodedToken.userRole
+                    user_role: decodedToken.role
                 };
                 localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 

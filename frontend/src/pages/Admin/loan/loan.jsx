@@ -33,6 +33,7 @@ const LoanPage = () => {
             const res = await axios.get(`http://localhost:2866/api/loan/return/not?userId=${userId}`);
             setLoanList(res.data); // [{loanId, bookTitle, loanStart}, ...]
         } catch (err) {
+            console.log(err);
             alert('대출 내역 조회 실패');
         }
     };

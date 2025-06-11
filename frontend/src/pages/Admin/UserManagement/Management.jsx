@@ -13,7 +13,7 @@ const Management = () => {
                 <Logo />
                     <div className="mt-8 w-full flex flex-col items-center gap-2">
                         <Button onClick={() => navigate('/admin/usermanagement/signup')} className="w-full">회원 추가</Button>
-                        <Button onClick={() => navigate('/admin/usermanagement/list')} className="w-full">회원 조회</Button>
+                        <Button onClick={() => navigate('/admin/usermanagement/userlist')} className="w-full">회원 조회</Button>
                         <Button onClick={() => navigate('/admin/usermanagement/loanlist')} className="w-full">대출내역 조회</Button>
                     </div>
                 </div>
