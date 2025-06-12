@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, CircularProgress, Alert, TablePagination, Box, TableSortLabel, Dialog, DialogTitle, DialogContent, DialogActions, Button as MuiButton } from '@mui/material';
 import axios from 'axios';
 import Logo from '../../../components/Logo';
+import { toast } from 'react-toastify';
 
 const columns = [
     { id: 'userId', label: '아이디', align: 'center', sortable: true },
@@ -81,15 +82,130 @@ const UserManagement = () => {
         setSelectedUser(user);
         setModalOpen(true);
     };
+    // 모달 닫기
     const handleCloseModal = () => {
         setModalOpen(false);
         setSelectedUser(null);
     };
-    const handleDeactivate = () => {
-        alert('비활성화 기능은 추후 구현 예정');
+    // 비활성화 기능
+    const handleDeactivate = async () => {
+        if (!selectedUser) return;
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:2866/user/inactive/${selectedUser.userId}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            // 성공 시 목록 새로고침
+            const fetchUsers = async () => {
+                try {
+                    setLoading(true);
+                    const token = localStorage.getItem('token');
+                    const response = await axios.get('http://localhost:2866/user/list', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    setUsers(response.data || []);
+                    setError(null);
+                } catch (error) {
+                    setError('유저 목록을 불러오는데 실패했습니다.');
+                } finally {
+                    setLoading(false);
+                }
+            };
+            await fetchUsers();
+            toast.success(`${selectedUser.userId}` + '님이 비활성화 되었습니다.');
+            setModalOpen(false);
+            setSelectedUser(null);
+        } catch (error) {
+            alert('비활성화에 실패했습니다.');
+            setLoading(false);
+        }
     };
-    const handleDelete = () => {
-        alert('회원정보 삭제 기능은 추후 구현 예정');
+
+    // 활성화 기능
+    const handleActivate = async () => {
+        if (!selectedUser) return;
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:2866/user/active/${selectedUser.userId}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            // 성공 시 목록 새로고침
+            const fetchUsers = async () => {
+                try {
+                    setLoading(true);
+                    const token = localStorage.getItem('token');
+                    const response = await axios.get('http://localhost:2866/user/list', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    setUsers(response.data || []);
+                    setError(null);
+                } catch (error) {
+                    setError('유저 목록을 불러오는데 실패했습니다.');
+                } finally {
+                    setLoading(false);
+                }
+            };
+            await fetchUsers();
+            toast.success(`${selectedUser.userId}` + '님이 활성화 되었습니다.');
+            setModalOpen(false);
+            setSelectedUser(null);
+        } catch (error) {
+            alert('활성화에 실패했습니다.');
+            setLoading(false);
+        }
+    };
+
+    // 회원정보 삭제 기능
+    const handleDelete = async () => {
+        if (!selectedUser) return;
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            await axios.put(
+                `http://localhost:2866/user/delete/${selectedUser.userId}`,
+                {}, // PUT이므로 body가 필요 없을 경우 빈 객체 전달
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            // 성공 시 목록 새로고침
+            const fetchUsers = async () => {
+                try {
+                    setLoading(true);
+                    const token = localStorage.getItem('token');
+                    const response = await axios.get('http://localhost:2866/user/list', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    setUsers(response.data || []);
+                    setError(null);
+                } catch (error) {
+                    setError('유저 목록을 불러오는데 실패했습니다.');
+                } finally {
+                    setLoading(false);
+                }
+            };
+            await fetchUsers();
+            toast.success(`${selectedUser.userId}님이 삭제되었습니다.`);
+            setModalOpen(false);
+            setSelectedUser(null);
+        } catch (error) {
+            alert('회원정보 삭제에 실패했습니다.');
+            setLoading(false);
+        }
     };
 
     if (loading) {
@@ -187,7 +303,11 @@ const UserManagement = () => {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <MuiButton onClick={handleDeactivate} color="warning" variant="contained">비활성화</MuiButton>
+                    {selectedUser?.userStatus === 'INACTIVE' ? (
+                        <MuiButton onClick={handleActivate} color="success" variant="contained">활성화</MuiButton>
+                    ) : (
+                        <MuiButton onClick={handleDeactivate} color="warning" variant="contained">비활성화</MuiButton>
+                    )}
                     <MuiButton onClick={handleDelete} color="error" variant="contained">회원정보 삭제</MuiButton>
                     <MuiButton onClick={handleCloseModal} color="primary" variant="outlined">닫기</MuiButton>
                 </DialogActions>

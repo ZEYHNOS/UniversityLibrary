@@ -1,5 +1,6 @@
 package com.library.universitylibrary.controller;
 
+import com.library.universitylibrary.dto.loan.AdminLoanListResponseDto;
 import com.library.universitylibrary.dto.loan.LoanListResponseDto;
 import com.library.universitylibrary.dto.loan.LoanRequestDto;
 import com.library.universitylibrary.entity.Book;
@@ -13,6 +14,7 @@ import com.library.universitylibrary.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -114,5 +116,12 @@ public class LoanController {
     public ResponseEntity<List<LoanListResponseDto>> getLoanListByUser(@PathVariable String userId) {
         List<LoanListResponseDto> loanList = loanService.getLoansByUserId(userId);
         return ResponseEntity.ok(loanList);
+    }
+
+    // 관리자 전용 대출내역 조회
+    @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AdminLoanListResponseDto>> getAllLoans() {
+        return ResponseEntity.ok(loanService.getAllLoans());
     }
 }

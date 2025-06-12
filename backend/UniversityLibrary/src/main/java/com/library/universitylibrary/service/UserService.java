@@ -6,6 +6,7 @@ import com.library.universitylibrary.dto.user.UserListResponseDto;
 import com.library.universitylibrary.entity.User;
 import com.library.universitylibrary.jwt.JwtUtil;
 import com.library.universitylibrary.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,7 @@ public class UserService {
         return userRepository.findAll().stream()
                 // 관리자계정은 제외하는 필터링
                 .filter(user -> !"ADMIN".equalsIgnoreCase(user.getUserRole()))
+                .filter(user -> !"DELETED".equalsIgnoreCase(user.getUserStatus()))
                 .map(user -> new UserListResponseDto(
                         user.getUserId(),
                         user.getUserName(),
@@ -71,4 +73,31 @@ public class UserService {
                 ))
                 .collect(Collectors.toList());
     }
+    
+    // 회원 비활성화
+    @Transactional
+    public void deactivateUser(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다: " + userId));
+
+        user.setUserStatus("INACTIVE");
+        // 변경 감지로 update 자동 수행됨
+    }
+    
+    // 회원 활성화
+    @Transactional
+    public void activateUser(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다: " + userId));
+
+        user.setUserStatus("ACTIVE");
+    }
+
+    @Transactional
+    public void deleteUser(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다: " + userId));
+        user.setUserStatus("DELETED");
+    }
+
 }

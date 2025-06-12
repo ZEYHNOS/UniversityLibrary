@@ -1,5 +1,6 @@
 package com.library.universitylibrary.service;
 
+import com.library.universitylibrary.dto.loan.AdminLoanListResponseDto;
 import com.library.universitylibrary.dto.loan.LoanListResponseDto;
 import com.library.universitylibrary.entity.Book;
 import com.library.universitylibrary.entity.Loan;
@@ -35,5 +36,21 @@ public class LoanService {
                     loan.getLoanEnd()
             );
         }).collect(Collectors.toList());
+    }
+
+    public List<AdminLoanListResponseDto> getAllLoans() {
+        return loanRepository.findAll().stream()
+                .map(loan -> new AdminLoanListResponseDto(
+                        loan.getLoanId(),
+                        loan.getUser().getUserId(),
+                        loan.getUser().getUserName(),
+                        loan.getBook().getBookId(),
+                        loan.getBook().getBookTitle(),
+                        loan.getLoanStart(),
+                        loan.getLoanEnd(),
+                        loan.getLoanReturnDate(),
+                        loan.getLoanReturn()
+                ))
+                .toList();
     }
 }

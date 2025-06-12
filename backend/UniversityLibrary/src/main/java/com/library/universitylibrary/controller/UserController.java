@@ -44,4 +44,24 @@ public class UserController {
     public List<UserListResponseDto> getUserList() {
         return userService.getAllUsers();
     }
+
+    // 회원 비활성화
+    @PutMapping("/inactive/{userId}")
+    public ResponseEntity<String> deactivateUser(@PathVariable String userId) {
+        userService.deactivateUser(userId);
+        return ResponseEntity.ok("사용자 비활성화 완료: " + userId);
+    }
+
+    // 회원 활성화
+    @PutMapping("/active/{userId}")
+    public ResponseEntity<String> activateUser(@PathVariable String userId) {
+        userService.activateUser(userId);
+        return ResponseEntity.ok("사용자 활성화 완료: " + userId);
+    }
+
+    @PutMapping("/delete/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable String userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok("사용자 삭제 완료: " + userId);
+    }
 }
